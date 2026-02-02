@@ -1,0 +1,347 @@
+.graph-viz-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    background: #0a0e1a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.graph-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Enhanced Controls Panel */
+.graph-controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.control-btn {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #f1f5f9;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.control-btn:hover {
+    background: rgba(51, 65, 85, 0.95);
+    border-color: rgba(148, 163, 184, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.control-btn:active {
+    transform: translateY(0);
+}
+
+.control-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Search and Filter Panel */
+.graph-toolbar {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 10;
+    max-width: 320px;
+}
+
+.search-box {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #f1f5f9;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    width: 100%;
+}
+
+.search-box:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.search-box::placeholder {
+    color: #64748b;
+}
+
+.filter-panel {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.filter-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.filter-option:hover {
+    background: rgba(51, 65, 85, 0.5);
+}
+
+.filter-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #64748b;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.filter-checkbox.checked {
+    background: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.filter-checkbox svg {
+    width: 12px;
+    height: 12px;
+    color: white;
+}
+
+.filter-label {
+    font-size: 14px;
+    color: #f1f5f9;
+    flex: 1;
+}
+
+.filter-count {
+    font-size: 12px;
+    color: #64748b;
+    background: rgba(100, 116, 139, 0.2);
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+/* Stats Panel */
+.stats-panel {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 20px;
+    z-index: 10;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+/* Legend */
+.graph-legend {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.legend-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #cbd5e1;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Node Info Tooltip */
+.node-tooltip {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.98);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    max-width: 300px;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.tooltip-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 6px;
+}
+
+.tooltip-type {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.tooltip-content {
+    font-size: 12px;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+/* Layout Controls */
+.layout-controls {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    gap: 4px;
+}
+
+.layout-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.layout-btn:hover {
+    color: #f1f5f9;
+    background: rgba(51, 65, 85, 0.5);
+}
+
+.layout-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+/* Loading State */
+.graph-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #94a3b8;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(59, 130, 246, 0.2);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .graph-toolbar {
+        max-width: 200px;
+    }
+
+    .stats-panel {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-panel {
+        display: none;
+    }
+}
