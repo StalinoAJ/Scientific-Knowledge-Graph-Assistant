@@ -1,0 +1,30 @@
+\ifglsentryexists{apc}{}%
+{%
+\gls@defglossaryentry{apc}%
+{%
+name={APC},%
+sort={APC},%
+type={main},%
+first={APC},%
+firstplural={APCs},%
+text={APC},%
+plural={APCs},%
+description={antigeen-presenterende cel},%
+descriptionplural={antigeen-presenterende cel},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+}%
