@@ -82,7 +82,7 @@ docker logs sci-kg-frontend --tail 50
 **Solution**:
 ```powershell
 # Rebuild frontend with fresh node_modules
-docker-compose build --no-cache frontend
+docker-compose build frontend
 docker-compose up -d frontend
 ```
 
