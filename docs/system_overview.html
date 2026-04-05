@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Overview | Scientific Knowledge Graph Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --accent: #000000;
+            --muted: #444444;
+            --border: #000000;
+            --card-bg: #ffffff;
+            --header-bg: #ffffff;
+            --header-text: #000000;
+            --mermaid-bg: #ffffff;
+        }
+
+        /* Forced Light Theme - Overriding any system dark mode */
+        body {
+            background-color: var(--bg) !important;
+            color: var(--text) !important;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 8rem;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .diagram-container {
+            background-color: var(--mermaid-bg);
+            border: 3px solid var(--border);
+            border-radius: 0;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 10px 10px 0px rgba(0,0,0,1);
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+        }
+
+        .mermaid {
+            width: 100%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border);
+            padding: 2rem;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 4px 4px 0px rgba(0,0,0,1);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .card i {
+            font-size: 1.5rem;
+        }
+
+        .card p {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 2px solid var(--border);
+            background: #f0f0f0;
+            color: #000;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Custom style for Mermaid nodes to look more like the image */
+        .node rect, .node circle, .node ellipse {
+            fill: #fff !important;
+            stroke: #000 !important;
+            stroke-width: 2px !important;
+        }
+        .node .label {
+            color: #000 !important;
+            font-weight: 600 !important;
+            padding: 0 12px !important; /* Force internal padding for text safety */
+        }
+        foreignObject {
+            overflow: visible; /* Ensure text isn't clipped by container */
+        }
+        .edgePath .path {
+            stroke: #000 !important;
+            stroke-width: 2px !important;
+        }
+        .marker {
+            fill: #000 !important;
+            stroke: #000 !important;
+        }
+
+        @media screen and (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            main { padding: 2rem 1rem; }
+            .diagram-container { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Scientific Knowledge Graph Assistant</h1>
+    <p>Multi-Agent RAG System | Technical Architecture & Design Specification</p>
+</header>
+
+<main>
+    <!-- Combined Architecture Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Unified System Architecture</h2>
+            <p>A self-explanatory, horizontal flow from data ingestion to user insights.</p>
+        </div>
+        
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    %% Inputs & Ingress Stage
+    User((fa:fa-user User Query)) --> Ingress
+    
+    subgraph Ingress [Ingress & Delivery]
+        Nginx["fa:fa-server NGINX PROXY&nbsp;<br/>Routes API traffic and serves static assets&nbsp;"]
+    end
+
+    %% Knowledge Context Stage
+    subgraph Knowledge_Context [Contextual Data Layer]
+        Polyglot["fa:fa-project-diagram NEO4J GRAPH&nbsp;<br/>Property graph for deep relationship analysis&nbsp;"]
+        Schema["fa:fa-folder-open Schema&nbsp;"]
+        Examples["fa:fa-file-lines Examples&nbsp;"]
+        
+        Polyglot --> Schema
+    end
+
+    %% Orchestration Stage
+    subgraph Orchestration [Orchestration Agent]
+        FastAPI["fa:fa-bolt FASTAPI AGENT&nbsp;<br/>Manages multi-agent logic and prompt assembly&nbsp;"]
+        Prompt["fa:fa-terminal Prompt&nbsp;"]
+        
+        FastAPI --> Prompt
+    end
+
+    %% Main Module Flow (Boundary to Boundary)
+    Ingress --> Orchestration
+    Knowledge_Context --> Orchestration
+
+    %% Core Processing Stage
+    subgraph Agent_Pipeline [Multi-Agent Core Engine]
+        Ollama["fa:fa-microchip OLLAMA INFERENCE&nbsp;<br/>Local Llama 3.2 natural language insights&nbsp;"]
+        GenQuery["fa:fa-file-code Generate Query&nbsp;"]
+        ExecEnv["fa:fa-desktop Execution Environment&nbsp;"]
+        RetContext["fa:fa-file-export Retrieve Context&nbsp;"]
+        GenAgent["fa:fa-brain Generative Agent&nbsp;"]
+        
+        Ollama --> GenQuery
+        GenQuery --> ExecEnv
+        ExecEnv --> RetContext
+        RetContext --> GenAgent
+    end
+
+    Orchestration --> Agent_Pipeline
+    Agent_Pipeline -->|Final Insights| UserRes["fa:fa-smile Response to User"]
+
+    %% Custom Nodes Styling
+    style Nginx fill:#fff,stroke:#000,stroke-width:2px;
+    style FastAPI fill:#fff,stroke:#000,stroke-width:2px;
+    style Polyglot fill:#fff,stroke:#000,stroke-width:2px;
+    style Ollama fill:#fff,stroke:#000,stroke-width:2px;
+    style User fill:#fff,stroke:#000;
+    style UserRes fill:#fff,stroke:#000;
+            </pre>
+        </div>
+    </section>
+
+    <!-- Use Case Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>UML Use Case Diagram</h2>
+            <p>Mapping primary actors and their interactions with the scientific system.</p>
+        </div>
+
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    Researcher((fa:fa-user Researcher))
+    Admin((fa:fa-user-gear System Admin))
+
+    subgraph System_Functions [Scientific KG Assistant]
+        UC1(fa:fa-search Query Graph)
+        UC2(fa:fa-upload Upload Papers)
+        UC3(fa:fa-chart-network Visualize)
+        UC4(fa:fa-lightbulb Generate Summaries)
+        UC5(fa:fa-gears Manage Models)
+    end
+
+    Researcher --> UC1
+    Researcher --> UC2
+    Researcher --> UC3
+    Researcher --> UC4
+
+    Admin --> UC5
+    Admin -.-> Researcher
+
+    style Researcher fill:#fff,stroke:#000
+    style Admin fill:#fff,stroke:#000
+            </pre>
+        </div>
+    </section>
+
+    <!-- Graph Schema Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Graph Data Model (Schema)</h2>
+            <p>Property graph relationships between scientific entities in Neo4j.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+erDiagram
+    PAPER ||--o{ AUTHOR : AUTHORED_BY
+    PAPER ||--o{ FIELD : STUDIES
+    PAPER ||--o{ METHOD : UTILIZES
+    PAPER }|..|{ PAPER : CITED_BY
+    PAPER {
+        string abstract
+        string title
+        vector embedding
+    }
+    AUTHOR {
+        string name
+        int citation_count
+    }
+            </pre>
+        </div>
+    </section>
+
+    <!-- Sequence Diagram Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Query Lifecycle Sequence</h2>
+            <p>The step-by-step communication between frontend, proxy, backend agents, and the knowledge store.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+sequenceDiagram
+    participant User as fa:fa-user Researcher
+    participant UI as fa:fa-desktop React UI (Cytoscape)
+    participant Nginx as fa:fa-server Nginx Proxy
+    participant API as fa:fa-bolt FastAPI Backend
+    participant DB as fa:fa-project-diagram Neo4j (Graph+Vector)
+    participant LLM as fa:fa-microchip Ollama (Llama 3.2)
+
+    User->>UI: Submit Scientific Query
+    UI->>Nginx: HTTP POST /api/query
+    Nginx->>API: Proxy to FastAPI
+    API->>DB: Vector Search (Top-K Similarity)
+    DB-->>API: Relevant Document Fragments
+    API->>DB: 2-Hop Cypher Traversal (Methods/Authors)
+    DB-->>API: Extra Graph Context
+    API->>LLM: Augmented Prompt Generation
+    LLM-->>API: Synthesized Answer
+    API->>Nginx: Return JSON (Answer + Sub-Graph)
+    Nginx->>UI: Return Data
+    UI->>User: Display Insights & Renders Graph
+            </pre>
+        </div>
+    </section>
+
+    <!-- Ingestion Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Data Ingestion Pipeline</h2>
+            <p>Automated conversion of raw scientific PDFs into nodes and semantic edges.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    Start([fa:fa-file-pdf Upload PDF Paper]) --> Extract[fa:fa-quote-left Extract Metadata & Abstract]
+    Extract --> Embed[fa:fa-braille Generate LLM Embeddings]
+    Embed --> Builder[fa:fa-wrench kg_builder.py Agent]
+    Builder --> Cypher[fa:fa-terminal Cypher MERGE Query]
+    Cypher --> Neo4j[(fa:fa-project-diagram Neo4j DB)]
+    Neo4j --> Link[fa:fa-link Semantic Linking]
+            </pre>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="section">
+        <div class="section-header">
+            <h2>Standard RAG vs. GraphRAG Innovation</h2>
+            <p>Comparing the traditional vector-only approach with the relationship-aware graph-augmented generation.</p>
+        </div>
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph LR
+    subgraph Standard_RAG [Standard RAG Flow]
+        Q1[fa:fa-magnifying-glass Query] --> VS1[fa:fa-database Vector Search]
+        VS1 --> LLM1[fa:fa-brain LLM Response]
+    end
+    
+    subgraph GraphRAG_Flow [Your Innovation: GraphRAG]
+        Q2[fa:fa-magnifying-glass Query] --> VS2[fa:fa-database Vector Search]
+        VS2 --> GT[fa:fa-project-diagram 2-Hop Graph Context]
+        GT --> LLM2[fa:fa-microchip Augmented LLM Generation]
+        LLM2 --> Final[fa:fa-lightbulb Topological Answer]
+    end
+            </pre>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Scientific Knowledge Graph Assistant | High-Fidelity Design Spec</p>
+</footer>
+
+<script>
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        securityLevel: 'loose',
+        flowchart: {
+            useMaxWidth: true,
+            htmlLabels: true,
+            curve: 'basis'
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -52,7 +52,7 @@
 
 		\begin{center}
 		\begin{LARGE}
-			\bf{ Scientific Knowledge Graph Assistant. \\}
+			\bf{ Scientific Knowledge Graph Assistant \\}
 		\end{LARGE}
 		\textbf{A PROJECT WORK\\}
   \it{submitted}
@@ -92,8 +92,8 @@
 \pagenumbering{roman}
 
 
-\begin{center}
-\includegraphics[width=1.0\textwidth]{bmclogofinal.png}
+
+
 \begin{center}
 	\includegraphics[width=0.8\textwidth]{bmclogofinal.png}
 \end{center}
@@ -105,13 +105,16 @@
 This is to certify that this Project work entitled \textbf{"SCIENTIFIC KNOWLEDGE GRAPH ASSISTANT"}, is the bonafide record of work carried out by \textbf{Stalino A J (213143010016)} in partial fulfillment of the requirements for the award of the degree of \textbf{Integrated M.Sc Computer Science in Artificial Intelligence and Machine Learning} of \textbf{Mahatma Gandhi University} at the Department of Computer Science, Bharata Mata College, Thrikkakara during the academic year 2025-26.
 \vspace{40pt}
 \begin{flushleft}
-	\textbf{Mr. Harikrishnan P} \hfill \textbf{Dr. John T Abraham} \\
+	\textbf{Ms. Neetha T P} \hfill \textbf{Dr. John T Abraham} \\
 	\textbf{Project Guide} \hfill \textbf{Head of the Department}
 \end{flushleft}
 \vspace{40pt}
-\textbf{Name and Signature of External Examiner:} \hrulefill
-\vspace{20pt}
-\textbf{Date:} \hrulefill \hfill \textbf{Place: Thrikkakara}
+\vspace{30pt}
+\textbf{Name and Signature of External Examiner:} \hspace{50 pt}                    \hspace{180 pt} 
+\begin{flushleft}
+\vspace{10pt}
+\textbf{Date :}
+\end{flushleft}
 
 \clearpage
 
@@ -133,7 +136,7 @@ I declare that the work presented in this Project titled \textbf{"SCIENTIFIC KNO
 	\section*{ACKNOWLEDGEMENT}
 	\noindent{\rule{\textwidth}{1.5pt}}
 \end{center}
-First of all, I express my gratitude to the Almighty, who blessed me with the zeal and enthusiasm to complete this project work successfully. I am extremely thankful to my supervisor \textbf{Mr. Harikrishnan P}, Lecturer, Computer Science Department, Bharata Mata College, Thrikkakara for their motivation and tireless efforts to help me to get deep knowledge of the project work and supporting me throughout the life cycle of my \textit{Integrated M.Sc Computer Science in Artificial Intelligence and Machine Learning} project work. Especially, the extensive comments, healthy discussions, and fruitful interactions with the supervisor had a direct impact on the final form and quality of this work.
+First of all, I express my gratitude to the Almighty, who blessed me with the zeal and enthusiasm to complete this project work successfully. I am extremely thankful to my supervisor \textbf{Ms. Neetha T P}, Lecturer, Computer Science Department, Bharata Mata College, Thrikkakara for their motivation and tireless efforts to help me to get deep knowledge of the project work and supporting me throughout the life cycle of my \textit{Integrated M.Sc Computer Science in Artificial Intelligence and Machine Learning} project work. Especially, the extensive comments, healthy discussions, and fruitful interactions with the supervisor had a direct impact on the final form and quality of this work.
 
 I am also thankful to \textbf{Dr. John T Abraham}, Head of the Computer Science Department, for his fruitful guidance through the early years of chaos and confusion. I wish to thank the faculty members and supporting staff of Computer Science Department for their full support and heartiest co-operation.	
 
@@ -199,7 +202,7 @@ The genesis of this research stems from the inherent limitations of modern searc
 
 Furthermore, existing proprietary solutions like OpenAI APIs or commercial knowledge-graph products represent a significant financial overhead and potential privacy risk for independent researchers or smaller institutions. By containerizing open-source LLMs alongside high-performance graph databases, we democratize access to advanced scientific data synthesis tools.
 
-\sectionsection{Scope}
+\section{Scope}
 The scope of this project is confined to the complete software lifecycle design—from requirement capture to implementation and empirical evaluation—of the Scientific Knowledge Graph Assistant. Functionally, the system scope includes:
 \begin{itemize}
     \item \textbf{Backend Ecosystem}: Developed using Python's FastAPI, serving REST endpoints for ingestion, semantic parsing, graphing, querying, and statistical analysis.
@@ -385,12 +388,14 @@ The architecture heavily emphasizes the "Separation of Concerns" principle, resu
 The architecture follows a strict Client-Server Microservices pattern mediated by a proxy. 
 
 \vspace{10pt}
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
 \centering
-\vspace{8cm} % Make space for theoretical visualization
+\vspace{2cm} % Make space for theoretical visualization
+\includegraphics[width=\linewidth]{image.png}
+
 \caption{System Architecture Diagram indicating Nginx, FastAPI, Neo4j, and Ollama relationships.}
 \label{fig:architecture}
-\end{figure}
+\end{figure*}
 \vspace{10pt}
 
 As depicted dynamically in the system structure, the Nginx reverse proxy routes all \texttt{:80} traffic. \texttt{/api} paths proxy directly to the FastAPI Python worker executing Uvicorn. The Python worker simultaneously maintains persistent Bolt protocol connections to the Neo4j instance to handle parallel transaction batches and HTTP REST calls to the local Ollama daemon on port \texttt{11434} for rapid Llama 3.2 inferences.
@@ -419,12 +424,13 @@ The Level 1 DFD dives into the internal data translation mechanics:
 A Use Case diagram details the actionable intents of the actors interacting with the system boundaries.
 
 \vspace{10pt}
-\begin{figure}[htbp]
+\begin{figure*}[htbp]
 \centering
-\vspace{6cm} % Placeholder space
+\vspace{2cm} % Placeholder space
+\includegraphics[width=1\linewidth]{usecase.png}
 \caption{UML Use Case Diagram representing primary Actors and System Functions.}
 \label{fig:usecase}
-\end{figure}
+\end{figure*}
 \vspace{10pt}
 
 Key Use Cases include:
@@ -475,12 +481,12 @@ The backend relies on modular Python components interacting closely.
 Located dynamically in \texttt{backend/kg\_construction/graph\_builder.py}, this module handles the safe, transactional ingestion of nodes ensuring data deduplication. Using Neo4j's \texttt{MERGE} clause is central to this mechanism. The Cypher query ensures duplicate nodes for the same Author are omitted, and instead, new edges are correctly drawn to existing entities. Every insertion simultaneously runs an embedding generation loop against Ollama, appending numerical vectors to the base abstract metadata.
 
 \subsection{Retrieval-Augmented Generation Architecture}
-The true innovation relies on the GraphRAG implementation found within \texttt{frontend/graph\_rag/graph\_retriever.py} and \texttt{answer\_generator.py}. Standard vector search utilizes cosine similarity to extract the top-K papers relevant to the query string. The Graph Retriever expands this dynamically. Once the top 3 papers are identified, a secondary Cypher query executes traversing out up to 2 hops (e.g., retrieving the Methods and Co-Authors surrounding the target papers).
+The true innovation relies on the GraphRAG implementation found within \newline\texttt{frontend/graph\_rag/graph\_retriever.py} and \texttt{answer\_generator.py}. Standard vector search utilizes cosine similarity to extract the top-K papers relevant to the query string. The Graph Retriever expands this dynamically. Once the top 3 papers are identified, a secondary Cypher query executes traversing out up to 2 hops (e.g., retrieving the Methods and Co-Authors surrounding the target papers).
 This topological data is subsequently mapped into a readable string and pushed to Llama 3.2 instructing the prompt:
 \textit{"You are a scientific assistant. Use the following explicit graph relationships and raw abstracts to answer the query accurately..."}
 
 \section{Frontend Visualization Implementation}
-The React application (\texttt{frontend/src/App.tsx}) orchestrates the state. The complex interactions occur within the Cytoscape canvas (\texttt{frontend/src/components/NetworkGraph.tsx}). To maximize browser RAM efficiency, large network payloads over 20,000 JSON edges utilize Cytoscape's WebGL or automated layout algorithms incrementally, ensuring the user interface remains smoothly responsive at 60 FPS while physics force-directed layouts compute asynchronously. Furthermore, the aesthetics heavily employ modern 'Glassmorphism' CSS techniques—semi-transparent overlays, glowing accents, and a comprehensive dark-mode to enhance perceived product quality immensely.
+The React application (\texttt{frontend/src/App.tsx}) orchestrates the state. The complex interactions occur within the Cytoscape canvas \newline(\texttt{frontend/src/components/NetworkGraph.tsx}). To maximize browser RAM efficiency, large network payloads over 20,000 JSON edges utilize Cytoscape's WebGL or automated layout algorithms incrementally, ensuring the user interface remains smoothly responsive at 60 FPS while physics force-directed layouts compute asynchronously. Furthermore, the aesthetics heavily employ modern 'Glassmorphism' CSS techniques—semi-transparent overlays, glowing accents, and a comprehensive dark-mode to enhance perceived product quality immensely.
 
 \chapter{SYSTEM TESTING}
 \noindent{\rule{\textwidth}{1.5pt}}
@@ -617,10 +623,10 @@ This section provides visual confirmations of the system aesthetics, interaction
 	\bibitem{b4} Meta AI Research. "The Llama 3 Herd of Models: Technical Overview." arXiv preprint. 2024.
 \end{thebibliography}
 
-\chapter*{Publications}
-\addcontentsline{toc}{chapter}{Publications}
-\begin{enumerate}[{[1]}]
-	\item [Authored Name], [Supervisor Name]. "Evaluating Zero-Cost Open Source GraphRAG implementations utilizing Llama 3 and Neo4j for Academic Review Synthesis." \textit{Pending Submission to the International Journal of Artificial Intelligence Research.} 2026.
-\end{enumerate}
+% \chapter*{Publications}
+% \addcontentsline{toc}{chapter}{Publications}
+% \begin{enumerate}[{[1]}]
+% 	\item [Authored Name], [Supervisor Name]. "Evaluating Zero-Cost Open Source GraphRAG implementations utilizing Llama 3 and Neo4j for Academic Review Synthesis." \textit{Pending Submission to the International Journal of Artificial Intelligence Research.} 2026.
+% \end{enumerate}
 
 \end{document}
